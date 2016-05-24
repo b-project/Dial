@@ -1,0 +1,26 @@
+# Xml files containing onClick (menus and layouts) require that proguard not
+# remove their handlers.
+-keepclassmembers class * extends android.app.Activity {
+  public void *(android.view.View);
+  public void *(android.view.MenuItem);
+}
+
+# Any class or method annotated with NeededForTesting or NeededForReflection.
+-keep @com.android.contacts.common.testing.NeededForTesting class *
+-keepclassmembers class * {
+@com.android.contacts.common.testing.NeededForTesting *;
+@com.android.dialer.NeededForReflection *;
+}
+
+# Keep ExtendedLookupDirectories for assets/contacts_extensions.properties
+-keep class com.android.dialer.lookup.ExtendedLookupDirectories { *; }
+
+# Keep behavior class needed by design library
+-keep class android.support.design.widget.AppBarLayout$ScrollingViewBehavior { *; }
+
+-verbose
+
+-keep public class cyanogenmod.app.StatusBarPanelCustomTile
+-keep public class cyanogenmod.app.CustomTile
+
+-dontwarn cyanogenmod.app.*
